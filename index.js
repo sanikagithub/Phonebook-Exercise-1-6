@@ -39,11 +39,6 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-morgan.token("body", (req, res) => JSON.stringify(req.body));
-app.use(
-  morgan(":method :url :status :res[content-length] - :response-time ms :body")
-);
-
 app.use(express.static(path.resolve(__dirname, "../frontend/build")));
 
 app.get("/info", (req, res) => {
@@ -83,7 +78,7 @@ app.post("/api/persons", (req, res) => {
     return res.status(400).json({ error: "the number field is missing" });
   }
   if (items.find(i => i.name === body.name)) {
-    return res.status(400).json({ errpr: "the name must be unique" });
+    return res.status(400).json({ error: "the name must be unique" });
   }
   const item = {
     id: id,
